@@ -1,24 +1,16 @@
 use core::str;
 use std::fmt;
 
-#[derive(Debug)]
-pub struct DNAMatrix {
-    pub name: String,
-    length: usize,
-    probs: Vec<Vec<f64>>,
-    conservation: Vec<f64>,
-    max_score: f64,
-    threshold: f64,
-    pub strand: Strand
-}
-
+/// A DNA sequence have bases and indices. These indices are used to save base position and
+/// they are necessary when the sequences have gaps (ie after alignmnent).
 pub struct Sequence {
     idxs: Vec<usize>,
     bases: Vec<char>,
-    
 }
 
 impl From<&str> for Sequence {
+    /// Create a Sequence from a `seq`. Gaps '-' are removed from bases and indices.
+    /// There is no test for valid bases (ACGT or acgt).
     fn from(seq: &str) -> Self {
         seq.char_indices()
             .filter(|&(_,x)| !x.eq(&'-'))
@@ -30,6 +22,7 @@ impl From<&str> for Sequence {
     }
 }
 
+/// DNA strand forward or reverse.
 #[derive(Debug)]
 pub enum Strand {
     Forward, 
@@ -45,11 +38,14 @@ impl fmt::Display for Strand {
     }
 }
 
+
+/// Score are assigned to a range, so there is a `start` and an `end` besides the `score` value.
+/// Reverse strand scores have `start` > `end`. 
+/// The score length is the same as matrix length
 #[derive(Debug)]
 pub struct Score {
     start: usize,
     end: usize, 
-    // strand: Strand,
     score: f64,
 }
 
@@ -57,6 +53,20 @@ impl fmt::Display for Score {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}\t{}\t{:.3}", self.start, self.end, self.score )
     }
+}
+
+/// DNA matrix 
+/// # Atributes
+///
+#[derive(Debug)]
+pub struct DNAMatrix {
+    pub name: String,
+    length: usize,
+    probs: Vec<Vec<f64>>,
+    conservation: Vec<f64>,
+    max_score: f64,
+    threshold: f64,
+    pub strand: Strand
 }
 
 impl DNAMatrix {
