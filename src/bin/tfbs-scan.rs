@@ -21,7 +21,7 @@ fn read_specific_thresholds(filename: &str) -> HashMap<String, f64> {
     let thresholds: HashMap<String, f64> = data.lines()
     .fold(HashMap::<String,f64>::new(), |mut h, line|{
         if let Some((name, cutoff)) = line.split_once("\t") {
-            h.insert(name.to_string(), cutoff.parse::<f64>().expect("threshould should be a number"));
+            h.insert(name.to_string(), cutoff.parse::<f64>().expect("threshold should be a number"));
         };
         h
     });

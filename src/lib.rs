@@ -44,14 +44,17 @@ impl fmt::Display for Strand {
 /// The score length is the same as matrix length
 #[derive(Debug)]
 pub struct Score {
-    start: usize,
-    end: usize, 
+    seq_start: usize,
+    seq_end: usize,
+    algn_start: usize,
+    algn_end: usize,
     score: f64,
 }
 
 impl fmt::Display for Score {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}\t{}\t{:.3}", self.start, self.end, self.score )
+        // write!(f, "{}\t{}\t{:.3}", self.start, self.end, self.score )
+        write!(f, "{}\t{}\t{}\t{}\t{:.3}", self.seq_start, self.seq_end, self.algn_start, self.algn_end, self.score )
     }
 }
 
@@ -119,7 +122,6 @@ impl DNAMatrix {
 
     fn calculate_conservation(&mut self) {
         for position in self.probs.iter() {
-            // let sum: f64 = position.iter().map(|x| if x > &0.0 { x * x.ln() } else { 0.0 }).sum();
             let sum: f64 = position
                 .iter()
                 .fold(0.0, |acc, x| if x > &0.0 { acc + x * x.ln() } else { acc });
@@ -156,7 +158,7 @@ impl DNAMatrix {
                 }, 
             )
             .enumerate()
-            .map(|v: (usize, f64)| Score {start: seq.idxs[v.0] + s , end: seq.idxs[v.0] + e, score: v.1 / self.max_score})
+            .map(|v: (usize, f64)| Score {seq_start: v.0 + s, seq_end: v.0 + e, algn_start: seq.idxs[v.0 + s - 1] + 1, algn_end: seq.idxs[v.0 + e - 1] + 1, score: v.1 / self.max_score})
             .filter(|v| v.score >= self.threshold)
             .collect();
         scores
@@ -175,46 +177,77 @@ impl DNAMatrix {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
+    // #[test]
+    // fn test_calculate_probs() {
+    //     let v = super::DNAMatrix::calculate_probs(&[
+    //         &[2.0, 0.0, 0.0, 0.0],
+    //         &[1.0, 0.0, 0.0, 1.0],
+    //         &[1.0, 0.0, 0.0, 0.0],
+    //         &[0.50, 0.50, 0.50, 0.50],
+    //     ]);
+    //     println!("{:?}", v);
+    // }
+
+    // #[test]
+    // fn test_create_dna_matrix() {
+    //     let c: &[&[f64]] = &[
+    //         &[2.0, 0.0, 0.0, 0.0],
+    //         &[1.0, 0.0, 0.0, 1.0],
+    //         &[1.0, 0.0, 0.0, 0.0],
+    //         &[0.50, 0.50, 0.50, 0.50],
+    //     ];
+    //     let m = super::DNAMatrix::new("teste", 0.1, c);
+    //     println!("{:?}", m.conservation);
+    //     println!("{:?}", m.max_score);
+    // }
+
+    // #[test]
+    // fn test_scan() {
+    //     let c: &[&[f64]] = &[
+    //         &[2.0, 0.0, 0.0, 0.0],
+    //         &[1.0, 0.0, 0.0, 1.0],
+    //         &[1.0, 0.0, 0.0, 0.0],
+    //         &[0.50, 0.50, 0.50, 0.50],
+    //     ];
+    //     let m = super::DNAMatrix::new("teste", 0.5, c, Strand::Forward);
+    //     let seq = b"ACGTACGTACGTAGATGTCTAGTACGTACGCTAGCTAGCTGAGACTGACTAGTACGTAAGCTAGCACG";
+    //     let seqb = b"AAAAACCCCCGGGGTTTTTCGTACGTACGTAGATGTCTAGTACGTACGCTAGCTAGCTGAGACTGACTAGTACGTAAGCTAGCACG";
+    //     let scores = m.scan(seq);
+    //     let scoresb = m.scan(seqb);
+    //     println!("{:?}", scores);
+    //     println!("{:?}", scoresb);
+    // }
 
     #[test]
-    fn test_calculate_probs() {
-        let v = super::DNAMatrix::calculate_probs(&[
-            &[2.0, 0.0, 0.0, 0.0],
-            &[1.0, 0.0, 0.0, 1.0],
-            &[1.0, 0.0, 0.0, 0.0],
-            &[0.50, 0.50, 0.50, 0.50],
-        ]);
-        println!("{:?}", v);
-    }
-
-    #[test]
-    fn test_create_dna_matrix() {
-        let c: &[&[f64]] = &[
-            &[2.0, 0.0, 0.0, 0.0],
-            &[1.0, 0.0, 0.0, 1.0],
-            &[1.0, 0.0, 0.0, 0.0],
-            &[0.50, 0.50, 0.50, 0.50],
+    fn test_scan_forward() {
+        let c = &vec![
+            vec![2.0, 0.0, 0.0, 0.0],
+            vec![1.0, 0.0, 0.0, 1.0],
+            vec![1.0, 0.0, 0.0, 0.0],
+            vec![0.50, 0.50, 0.50, 0.50],
         ];
-        let m = super::DNAMatrix::new("teste", 0.1, c);
-        println!("{:?}", m.conservation);
-        println!("{:?}", m.max_score);
-    }
-
-    #[test]
-    fn test_scan() {
-        let c: &[&[f64]] = &[
-            &[2.0, 0.0, 0.0, 0.0],
-            &[1.0, 0.0, 0.0, 1.0],
-            &[1.0, 0.0, 0.0, 0.0],
-            &[0.50, 0.50, 0.50, 0.50],
-        ];
-        let m = super::DNAMatrix::new("teste", 0.5, c);
-        let seq = b"ACGTACGTACGTAGATGTCTAGTACGTACGCTAGCTAGCTGAGACTGACTAGTACGTAAGCTAGCACG";
-        let seqb = b"AAAAACCCCCGGGGTTTTTCGTACGTACGTAGATGTCTAGTACGTACGCTAGCTAGCTGAGACTGACTAGTACGTAAGCTAGCACG";
-        let scores = m.scan(seq);
-        let scoresb = m.scan(seqb);
+        let s = Strand::Forward;
+        let m = super::DNAMatrix::new("teste", 0.5, c, s);
+        let seq = Sequence::from("-ACG-TACGTACGTAGATGTCTAGTACGTACGCTAGCTAGCTGAGACTGACTAGTACGTAAGCTAGCACG");
+        let scores = m.scan(&seq);
         println!("{:?}", scores);
-        println!("{:?}", scoresb);
+    }
+
+    #[test]
+    fn test_scan_reverse() {
+        let c = &vec![
+            vec![2.0, 0.0, 0.0, 0.0],
+            vec![1.0, 0.0, 0.0, 1.0],
+            vec![1.0, 0.0, 0.0, 0.0],
+            vec![0.50, 0.50, 0.50, 0.50],
+        ];
+        let s = Strand::Reverse;
+        let m = super::DNAMatrix::new("teste", 0.5, c, s);
+        let seq = Sequence::from("-ACG-TACGTACGTAGATGTCTAGTACGTACGCTAGCTAGCTGAGACTGACTAGTACGTAAGCTAGCACG");
+        let scores = m.scan(&seq);
+        println!("{:?}", scores);
     }
 
     // #[test]
@@ -229,12 +262,12 @@ mod tests {
     //     println!("Matriz {} has length {} and probabilities {:?}", m.name, m.length, m.probs);
     // }
 
-    #[test]
-    fn it_works() {
-        let x = 0.0 * 0.00_f64.ln();
-        println!("{}", x);
-        assert_eq!(2 + 2, 4);
-    }
+    // #[test]
+    // fn it_works() {
+    //     let x = 0.0 * 0.00_f64.ln();
+    //     println!("{}", x);
+    //     assert_eq!(2 + 2, 4);
+    // }
 
     // #[test]
     // fn dnamotif() {
