@@ -447,7 +447,7 @@ struct Opt {
     sequence: String,
 }
 
-fn run() {
+pub fn run() {
     let opt = Opt::from_args(); 
     let threshold = match opt.threshold.parse::<f64>() {
         Ok(number) => Threshold::Fixed(number),
