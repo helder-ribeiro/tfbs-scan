@@ -3,6 +3,9 @@ use std::io;
 use structopt::StructOpt;
 use tfbs::{self, Sequence};
 
+pub fn tfbs_print_git() {
+        println!("Hello, git!");
+}
 
 #[derive(Debug)]
 struct JasparMatrix {
