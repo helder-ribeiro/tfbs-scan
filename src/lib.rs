@@ -1,6 +1,10 @@
 use core::str;
 use std::fmt;
 
+pub fn print_git() {
+        println!("Hello, git!");
+}
+
 /// A DNA sequence have bases and indices. These indices are used to save base position and
 /// they are necessary when the sequences have gaps (ie after alignmnent).
 pub struct Sequence {
