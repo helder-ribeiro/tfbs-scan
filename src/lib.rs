@@ -447,7 +447,12 @@ struct Opt {
     sequence: String,
 }
 
-pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> Vec<Score> {
+
+let th:&str="0.8";
+let ma:&str="/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt";
+let se:&str="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
+pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str)  {
     //let opt = Opt::from_args(); 
     let threshold = match th.parse::<f64>() {
         Ok(number) => Threshold::Fixed(number),
@@ -458,8 +463,7 @@ pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> Vec<Score> {
 
     for m in matrices {
         let scores =  m.scan(&seq);
-        result = scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand))
-        result.as_str()
+        print!("{}", scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand)));
     }
 }
 
