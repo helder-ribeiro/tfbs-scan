@@ -400,11 +400,11 @@ fn read_specific_thresholds(filename: &str) -> HashMap<String, f64> {
     thresholds 
 }
 
-fn read_matrix_from_jaspar_file(filename: &str, threshold: &Threshold) -> Vec<tfbs::DNAMatrix> {
+fn read_matrix_from_jaspar_file(filename: &str, threshold: &Threshold) -> Vec<DNAMatrix> {
     let data = fs::read_to_string(filename).expect("Unable to read file");
 
 
-    let matrices: Vec<tfbs::DNAMatrix> = data
+    let matrices: Vec<DNAMatrix> = data
         .lines()
         .fold(Vec::<JasparMatrix>::new(), |mut m, line| -> Vec<JasparMatrix> {
             if line.starts_with("ID") {
@@ -425,13 +425,13 @@ fn read_matrix_from_jaspar_file(filename: &str, threshold: &Threshold) -> Vec<tf
             }
         })
         .into_iter()
-        .fold(Vec::<tfbs::DNAMatrix>::new(), |mut acc, m| {
+        .fold(Vec::<DNAMatrix>::new(), |mut acc, m| {
             let t = match threshold {
                 Threshold::Fixed(t) => t,
                 Threshold::Specific(s) => s.get(&m.id).unwrap(),
             };
-            acc.push(tfbs::DNAMatrix::new(&m.id, *t, &m.counts, tfbs::Strand::Forward));
-            acc.push(tfbs::DNAMatrix::new(&m.id, *t, &m.counts, tfbs::Strand::Reverse));
+            acc.push(DNAMatrix::new(&m.id, *t, &m.counts, Strand::Forward));
+            acc.push(DNAMatrix::new(&m.id, *t, &m.counts, Strand::Reverse));
             acc
         });
     matrices
