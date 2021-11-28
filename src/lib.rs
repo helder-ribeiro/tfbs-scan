@@ -458,8 +458,8 @@ pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<&'a str> {
 
     for m in matrices {
         let scores =  m.scan(&seq);
-        
+        results = scores
     }
-    scores
+    results
 }
 
