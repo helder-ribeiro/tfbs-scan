@@ -447,7 +447,7 @@ struct Opt {
     sequence: String,
 }
 
-pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<&str> {
+pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<&'a str> {
     //let opt = Opt::from_args(); 
     let threshold = match th.parse::<f64>() {
         Ok(number) => Threshold::Fixed(number),
@@ -459,7 +459,7 @@ pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<&str> {
     for m in matrices {
         let scores =  m.scan(&seq);
         result = scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand))
-        return result.as_str();
+        result.as_str()
     }
 }
 
