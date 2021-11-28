@@ -366,3 +366,7 @@ mod tests {
     //     println!("motif found at position {:?}", start_pos);
     // }
 }
+
+pub fn tfbs_print_git() {
+        println!("Hello, git!");
+}
