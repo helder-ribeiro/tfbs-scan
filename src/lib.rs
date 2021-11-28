@@ -447,7 +447,7 @@ struct Opt {
     sequence: String,
 }
 
-pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<Score> {
+pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<_> {
     //let opt = Opt::from_args(); 
     let threshold = match th.parse::<f64>() {
         Ok(number) => Threshold::Fixed(number),
