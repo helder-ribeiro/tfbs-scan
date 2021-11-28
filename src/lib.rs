@@ -454,7 +454,7 @@ pub fn run(th: &str, ma: &str, se: &str) {
         Err(_) => Threshold::Specific(read_specific_thresholds(&th)),
     };
     let matrices = read_matrix_from_jaspar_file(&ma, &threshold);
-    let seq = Sequence::from(se.as_str());
+    let seq = Sequence::from(se);
 
     for m in matrices {
         let scores =  m.scan(&seq);
