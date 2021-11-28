@@ -1,7 +1,7 @@
 use core::str;
 use std::fmt;
 
-pub fn print_git() {
+pub fn tfbs_print_git() {
         println!("Hello, git!");
 }
 
