@@ -458,8 +458,8 @@ pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str) -> &'a Vec<_> {
 
     for m in matrices {
         let scores =  m.scan(&seq);
-        return scores;
+        result = scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand))
+        return result;
     }
-    scores
 }
 
