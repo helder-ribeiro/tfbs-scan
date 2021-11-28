@@ -448,9 +448,9 @@ struct Opt {
 }
 
 
-let th:&str="0.8";
-let ma:&str="/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt";
-let se:&str="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+//let th:&str="0.8";
+//let ma:&str="/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt";
+//let se:&str="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
 pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str)  {
     //let opt = Opt::from_args(); 
@@ -467,3 +467,4 @@ pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str)  {
     }
 }
 
+run("0.8", "/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
