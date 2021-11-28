@@ -447,14 +447,14 @@ struct Opt {
     sequence: String,
 }
 
-pub fn run() {
-    let opt = Opt::from_args(); 
-    let threshold = match opt.threshold.parse::<f64>() {
+pub fn run(th, ma, se) {
+    //let opt = Opt::from_args(); 
+    let threshold = match th.parse::<f64>() {
         Ok(number) => Threshold::Fixed(number),
-        Err(_) => Threshold::Specific(read_specific_thresholds(&opt.threshold)),
+        Err(_) => Threshold::Specific(read_specific_thresholds(&th)),
     };
-    let matrices = read_matrix_from_jaspar_file(&opt.jaspar_matrix_file, &threshold);
-    let seq = Sequence::from(opt.sequence.as_str());
+    let matrices = read_matrix_from_jaspar_file(&ma, &threshold);
+    let seq = Sequence::from(se.as_str());
 
     for m in matrices {
         let scores =  m.scan(&seq);
