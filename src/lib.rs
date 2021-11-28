@@ -458,7 +458,7 @@ pub fn run(th: &str, ma: &str, se: &str) -> &str {
 
     for m in matrices {
         let scores =  m.scan(&seq);
-        print!("{}", scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand)));
+        scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand);
     }
 }
 
