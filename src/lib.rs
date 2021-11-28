@@ -467,4 +467,4 @@ pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str)  {
     }
 }
 
-run!("0.8", "/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+run!("0.8", "/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
