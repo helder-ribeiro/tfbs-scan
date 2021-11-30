@@ -7,6 +7,7 @@ use structopt::StructOpt;
 
 /// A DNA sequence have bases and indices. These indices are used to save base position and
 /// they are necessary when the sequences have gaps (ie after alignmnent).
+#[derive(Debug)]
 pub struct Sequence {
     idxs: Vec<usize>,
     bases: Vec<char>,
