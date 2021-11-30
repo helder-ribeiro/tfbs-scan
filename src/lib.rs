@@ -382,6 +382,7 @@ struct JasparMatrix {
     counts: Vec<Vec<f64>>,
 }
 
+#[derive(Debug)]
 pub enum Threshold {
     Fixed(f64),
     Specific(HashMap<String, f64>)
