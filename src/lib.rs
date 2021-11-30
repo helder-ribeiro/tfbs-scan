@@ -388,7 +388,7 @@ pub enum Threshold {
     // Specific(String)
 }
 
-fn read_specific_thresholds(filename: &str) -> HashMap<String, f64> {
+pub fn read_specific_thresholds(filename: &str) -> HashMap<String, f64> {
     let data = fs::read_to_string(filename).expect("Unable to read file");
     let thresholds: HashMap<String, f64> = data.lines()
     .fold(HashMap::<String,f64>::new(), |mut h, line|{
