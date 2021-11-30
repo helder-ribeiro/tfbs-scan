@@ -53,7 +53,7 @@ pub struct Score {
     seq_end: usize,
     algn_start: usize,
     algn_end: usize,
-    score: f64,
+    pub score: f64,
 }
 
 impl fmt::Display for Score {
