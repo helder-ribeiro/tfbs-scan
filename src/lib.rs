@@ -400,7 +400,7 @@ fn read_specific_thresholds(filename: &str) -> HashMap<String, f64> {
     thresholds 
 }
 
-fn read_matrix_from_jaspar_file(filename: &str, threshold: &Threshold) -> Vec<DNAMatrix> {
+pub fn read_matrix_from_jaspar_file(filename: &str, threshold: &Threshold) -> Vec<DNAMatrix> {
     let data = fs::read_to_string(filename).expect("Unable to read file");
 
 
