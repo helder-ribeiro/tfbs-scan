@@ -452,19 +452,19 @@ struct Opt {
 //let ma:&str="/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt";
 //let se:&str="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
-pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str)  {
-    //let opt = Opt::from_args(); 
-    let threshold = match th.parse::<f64>() {
-        Ok(number) => Threshold::Fixed(number),
-        Err(_) => Threshold::Specific(read_specific_thresholds(&th)),
-    };
-    let matrices = read_matrix_from_jaspar_file(&ma, &threshold);
-    let seq = Sequence::from(se);
+//pub fn run<'a>(th: &'a str, ma: &'a str, se: &'a str)  {
+//    //let opt = Opt::from_args(); 
+//    let threshold = match th.parse::<f64>() {
+//        Ok(number) => Threshold::Fixed(number),
+//        Err(_) => Threshold::Specific(read_specific_thresholds(&th)),
+//    };
+//    let matrices = read_matrix_from_jaspar_file(&ma, &threshold);
+//    let seq = Sequence::from(se);
+//
+//    for m in matrices {
+//        let scores =  m.scan(&seq);
+//        print!("{}", scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand)));
+//    }
+//}
 
-    for m in matrices {
-        let scores =  m.scan(&seq);
-        print!("{}", scores.iter().fold(String::new(), |acc, arg| acc + &format!("{}\t{}\t{}\n", m.name, arg, m.strand)));
-    }
-}
-
-run!("0.8", "/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//run!("0.8", "/home/helder/Projetos/INSECTM/ze_rust_scan/JASPAR2020_CORE_vertebrates_non-redundant_pfms_transfac.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
