@@ -49,7 +49,7 @@ impl fmt::Display for Strand {
 /// The score length is the same as matrix length
 #[derive(Debug)]
 pub struct Score {
-    seq_start: usize,
+    pub seq_start: usize,
     seq_end: usize,
     algn_start: usize,
     algn_end: usize,
