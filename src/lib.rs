@@ -48,12 +48,12 @@ impl fmt::Display for Strand {
 /// Reverse strand scores have `start` > `end`. 
 /// The score length is the same as matrix length
 #[derive(Debug)]
-pub struct Score {
-    pub seq_start: usize,
+pub_strct! Score {
+    seq_start: usize,
     seq_end: usize,
     algn_start: usize,
     algn_end: usize,
-    pub score: f64,
+    score: f64,
 }
 
 impl fmt::Display for Score {
